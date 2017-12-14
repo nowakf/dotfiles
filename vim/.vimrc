@@ -20,6 +20,7 @@ Plug 'junegunn/fzf'
 "this has a problem in neovim
 Plug 'rhysd/open-pdf.vim'
 Plug 'mbbill/undotree'
+Plug 'xtal8/traces.vim'
 
 call plug#end()
 "Some experimental stuff for pdfs
@@ -68,8 +69,10 @@ let g:table_mode_auto_align = 1
 let g:table_mode_motion_left_map = '[<Bar>'
 
 let g:table_mode_motion_right_map = ']<Bar>'
+if !has('nvim')
   set term=xterm
   set t_Co=256
+endif
 
 set noerrorbells visualbell t_vb=
 set autoindent

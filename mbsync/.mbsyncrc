@@ -1,0 +1,36 @@
+IMAPAccount gmail
+# Address to connect to
+Host imap.gmail.com
+User francisnicholson@gmail.com
+PassCmd "pass google.com/mail/francisnicholson"
+#
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+#CertificateFile ~/.cert/imap.gmail.com.pem
+#CertificateFile ~/.cert/Equifax_Secure_CA.pem
+#
+# Use SSL
+SSLType IMAPS
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+# The trailing "/" is important
+Path ~/.mail/gmail/
+Inbox ~/.mail/gmail/Inbox
+
+Channel gmail-inbox
+Master :gmail-remote:
+Slave :gmail-local:
+Patterns "INBOX"
+
+Channel gmail-sent
+Master :gmail-remote:"[Gmail]/Sent Mail"
+Slave :gmail-local:sent
+
+
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+Expunge Both
+# Save the synchronization state files in the relevant directory
+SyncState *

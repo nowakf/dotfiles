@@ -3,6 +3,9 @@ filetype plugin on
 syntax on
 set autowrite
 
+map <silent><esc> :noh<cr>
+"this clears search on esc.
+
 command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
 
 call plug#begin('~/.vim/plugged')
@@ -14,6 +17,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'mhinz/vim-startify'
 Plug 'junegunn/goyo.vim'
 Plug 'godlygeek/tabular'
+Plug 'dhruvasagar/vim-table-mode'
 "At some point I should probably make this neater
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf'
@@ -59,16 +63,14 @@ if has('persistent_undo')
 	set undofile
 endif
 
-
 let g:undotree_CustomUndotreeCmd  = 'topleft vertical 30 new'
 let g:undotree_CustomDiffpanelCmd = 'belowright 10 new'
-
 
 "Table mode stuff:
 let g:table_mode_auto_align = 1
 let g:table_mode_motion_left_map = '[<Bar>'
-
 let g:table_mode_motion_right_map = ']<Bar>'
+
 if !has('nvim')
   set term=xterm
   set t_Co=256

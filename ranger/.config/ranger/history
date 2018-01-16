@@ -1,0 +1,50 @@
+scout -ftsea gitlh
+scout -ftsea git
+scout -ftsea cr
+mkdir .config
+mkdir nvim
+scout -ftsea .go
+open_with ll
+rename XY.go
+rename ui.go
+rename xy.go
+touch cell.go
+rename Cell.go
+flat -q
+open_with llp
+open_with llpp
+scout -ftsea sh
+scout -ftsea fonts
+unmark
+q
+scout -ftsea med
+scout -ftsea ra
+rename bin
+shell  %s
+chmod 
+chmod 765
+scout -ftsea .task
+rename alert.
+rename alert.py
+rename alert
+w
+wq
+scout -ftsea ude
+rename
+shell 
+rename xy.go_
+flat 0
+delete
+chmod 755
+AliasCommand 
+scout -ftsea Dow
+scout -ftsea Than
+flat -1
+open_with 
+scout -ftsea usb
+filter *_
+h filter
+filter *.txt
+
+filter .txt_
+unfilter

@@ -9,6 +9,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'w0rp/ale'
 Plug 'roxma/nvim-completion-manager'
+Plug 'tpope/vim-surround'
 
 call plug#end()
 
@@ -18,6 +19,7 @@ autocmd FileType go nmap <Leader>R <Plug>(go-run)
 autocmd FileType go nmap <Leader>i <Plug>(go-info)
 autocmd FileType go nmap <Leader>I <Plug>(go-doc)
 autocmd FileType go nmap <Leader>D <Plug>(go-def)
+autocmd FileType go nmap <Leader>B <Plug>(go-build)
 
 "COMPLETION-MANAGER
 let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}

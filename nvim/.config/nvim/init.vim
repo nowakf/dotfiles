@@ -21,8 +21,17 @@ autocmd FileType go nmap <Leader>I <Plug>(go-doc)
 autocmd FileType go nmap <Leader>D <Plug>(go-def)
 autocmd FileType go nmap <Leader>B <Plug>(go-build)
 
+let g:ale_sign_column_always = 1
+
 "COMPLETION-MANAGER
 let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
+
+"Yaml-lint
+let g:ale_yaml_yamllint_options = 'relaxed'
+
+
+"VIM-GO SETTINGS:
+let g:go_fmt_fail_silently = 1
 
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==

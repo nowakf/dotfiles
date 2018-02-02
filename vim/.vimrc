@@ -34,6 +34,12 @@ function! Altmap(char)
   if has('gui_running') | return ' <A-'.a:char.'> ' | else | return ' <Esc>'.a:char.' '|endif
 endfunction
 
+"switching buffers:
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
+nnoremap <silent><Leader><CR> :call fzf#run({'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
+            \ 'sink': 'e', 'down': '30%'})<CR>
+
 function! s:buflist()
   redir => ls
   silent ls
@@ -45,12 +51,9 @@ function! s:bufopen(e)
   execute 'buffer' matchstr(a:e, '^[ 0-9]*')
 endfunction
 
-nnoremap <silent> <Leader><Enter> :call fzf#run({
-\   'source':  reverse(<sid>buflist()),
-\   'sink':    function('<sid>bufopen'),
-\   'options': '+m',
-\   'down':    len(<sid>buflist()) + 2
-\ })<CR>
+set backspace=indent,eol,start
+
+autocmd FileType twee :nnoremap � /<C-R>="::".expand('<cword>')<C+)<CR>"
 
 
 :command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
@@ -70,6 +73,8 @@ let g:undotree_CustomDiffpanelCmd = 'belowright 10 new'
 let g:table_mode_auto_align = 1
 let g:table_mode_motion_left_map = '[<Bar>'
 let g:table_mode_motion_right_map = ']<Bar>'
+let g:table_mode_map_prefix = '<Leader>t'
+let g:table_mode_toggle_map = 'm'
 
 if !has('nvim')
   set term=xterm
@@ -81,8 +86,6 @@ set autoindent
 
 set spell spelllang=en_gb
 
-"let g:taskwiki_taskrc_location = '/cygdrive/c/Users/Administrator/.taskrc'
-"let g:taskwiki_data_location = '/cygdrive/c/Users/Administrator/.task'
 
 set backspace=indent,eol,start
 
@@ -109,6 +112,26 @@ endfunc
 let g:startify_custom_header = []
 
 map <Leader>g :Goyo<CR>
+
+function! g:Goyo_Before()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+endfunction
+
+function! g:Goyo_After()
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
+
+let g:goyo_callbacks = [function('g:Goyo_Before'), function('g:Goyo_After')]
 
 exec 'nnoremap'.Altmap('j').':m .+1<CR>=='
 exec 'nnoremap'.Altmap('k').':m .-2<CR>=='
@@ -152,8 +175,9 @@ map F <Plug>(easymotion-F)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
-"for i in range(97,122)
-"	let c = nr2char(i)
-"	exec "map ".c." <M-".c.">"
-"	exec "map! ".c." <M-".c.">"
-"endfor
+"" Backup, Swap and Undo
+set undofile " Persistent Undo
+set directory=~/.vim/swap,/tmp
+set backupdir=~/.vim/backup,/tmp
+set undodir=~/.vim/undo,/tmp
+

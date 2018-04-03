@@ -4,7 +4,8 @@ syntax on
 set autowrite
 
 map <silent><esc> :noh<cr>
-"this clears search on esc.
+"this clears search on escearch'
+
 
 command! -nargs=? Filter let @a='' | execute 'g/<args>/y A' | new | setlocal bt=nofile | put! a
 
@@ -25,6 +26,9 @@ Plug 'junegunn/fzf'
 Plug 'rhysd/open-pdf.vim'
 Plug 'mbbill/undotree'
 Plug 'xtal8/traces.vim'
+Plug 'justinmk/vim-sneak'
+Plug 'wellle/targets.vim'
+Plug 'tpope/vim-surround'
 
 call plug#end()
 "Some experimental stuff for pdfs
@@ -34,12 +38,17 @@ function! Altmap(char)
   if has('gui_running') | return ' <A-'.a:char.'> ' | else | return ' <Esc>'.a:char.' '|endif
 endfunction
 
+"move to current file
 "switching buffers:
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
-nnoremap <silent><Leader><CR> :call fzf#run({'source': map(range(1, bufnr('$')), 'bufname(v:val)'),
-            \ 'sink': 'e', 'down': '30%'})<CR>
+nnoremap <silent><Leader><CR> :Buffers<cr>
+nnoremap <silent><esc><esc> :ccl <cr>
+nnoremap <leader><T> :Tags<cr>
 
+"sneak stuff
+autocmd ColorScheme * hi! link Sneak Conditional
+let g:sneak#s_next = 1
 function! s:buflist()
   redir => ls
   silent ls
@@ -55,14 +64,18 @@ set backspace=indent,eol,start
 
 autocmd FileType twee :nnoremap � /<C-R>="::".expand('<cword>')<C+)<CR>"
 
+"plaintext editing stuff:
+autocmd FileType text :nnoremap <leader>cd :cd /home/francis/Documents/z-n.0.01/<cr>
+autocmd FileType text :nmap f <Plug>(easymotion-f)
+autocmd FileType text :nmap F <Plug>(easymotion-F)
 
 :command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
 :command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> - |fmt -csw78
 "Undotree
 nnoremap <F5> :UndotreeToggle<cr>
 let persistent_undo = 1
+set undodir=~/.undodir/
 if has('persistent_undo')
-	set undodir=~/.undodir/
 	set undofile
 endif
 
@@ -71,10 +84,11 @@ let g:undotree_CustomDiffpanelCmd = 'belowright 10 new'
 
 "Table mode stuff:
 let g:table_mode_auto_align = 1
-let g:table_mode_motion_left_map = '[<Bar>'
-let g:table_mode_motion_right_map = ']<Bar>'
+let g:table_mode_motion_left_map = '[['
+let g:table_mode_motion_right_map = ']]'
 let g:table_mode_map_prefix = '<Leader>t'
 let g:table_mode_toggle_map = 'm'
+
 
 if !has('nvim')
   set term=xterm
@@ -87,29 +101,30 @@ set autoindent
 set spell spelllang=en_gb
 
 
-set backspace=indent,eol,start
+
 
 autocmd FileType twee :nnoremap � /<C-R>="::".expand('<cword>')<CR><CR>
 autocmd FileType yarn :nnoremap � /<C-R>="title: ".expand('<cword>')<CR><CR>
-
-"vim-go stuff
-nnoremap <silent> <Leader>L :GoLint<CR>
-nnoremap <silent> <Leader>E :GoErrCheck<CR>
 
 "FZF stuff
 nnoremap <silent> <C-p> :FZF<CR>
 nnoremap <silent> <Leader>o  :History <CR>
 nnoremap <silent> <Leader>F :Lines <CR>
+
+
+
 autocmd VimEnter * command St noautocmd enew | call startify#insane_in_the_membrane()
+let g:startify_bookmarks = [ {'c': '~/.vimrc'}, {'n':'~/.config/nvim/init.vim'}, '~/.zshrc' ]
+let g:startify_custom_header = []
+
+
 set ttimeout
 set ttimeoutlen=0
 autocmd TabEnter * set showtabline=1 
 autocmd TabEnter * let timer = timer_start(1000, 'SetTabLine')
-func SetTabLine(timer)
+func! SetTabLine(timer)
 	set showtabline=0
 endfunc
-"pomodoro
-let g:startify_custom_header = []
 
 map <Leader>g :Goyo<CR>
 
@@ -170,8 +185,6 @@ hi link EasyMotionTarget Boolean
 
 let g:EasyMotion_do_mapping = 0
 map <Leader>f <Plug>(easymotion-s)
-map f <Plug>(easymotion-f)
-map F <Plug>(easymotion-F)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 

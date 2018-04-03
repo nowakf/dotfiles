@@ -1,50 +1,50 @@
-scout -ftsea ude
-rename
-shell 
-rename xy.go_
-flat 0
-delete
-AliasCommand 
+mkdir world
+touch
+touch emails.go
+touch graph.go
+scout -ftsea La
 scout -ftsea Dow
-scout -ftsea Than
-open_with 
-scout -ftsea usb
-filter *_
-h filter
-filter *.txt
-filter .txt_
-unfilter
-rename Arduino
-mkdir common
-touch Setup.go
-touch Global
-rename Global.go
-rename errors.go
-touch TextButton.go
-mkdir uielements
-touch scrollarea.go
-touch Column.go
-rename list.go
-touch rect.go
-touch 
-SetupUi.go
-touch SetupUi.go
-rename Setu
-touch actor.go
-touch action.go
-rename TextData.go
-mkdir entities
-scout -ftsea st
-shell q %s
+search langua
+scout -ftsea lang
+scout -ftsea .loca
+scout -ftsea nvi
+rename languageclient
+scout -ftsea r
+scout -ftsea shar
+scout -ftsea 
+chmod 111
+chmod 222
+chmod 333
+chmod 444
+chmod 555
+chmod 666
+scout -ftsea avr
+open_with vim
+search iom
+scout -ftsea .git
+search git
+w
 chmod 755
-rename randsong.py
-rename randsong.sh
+search Unity
+search 328
+search arduino
+search avr
+search ard
+open_with 
+mkdir steppers
+drivers
+mkdir drivers
+touch object.go
+rename main.go
 wq
-rename roughSpec.txt
-Spacer_test.go
-touch Spacer_test.go
-tools.go
-touch tools.go
-touch data.go
-flat -1
+rename
+rename m_test.go
+scout -ftsea go
+scout -ftsea pr
+scout -ftsea gra
+mkdir graph
+touch main.go
+shell q %s
+q
+scout -ftsea no
 

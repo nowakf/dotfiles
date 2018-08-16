@@ -1,50 +1,50 @@
-mkdir world
-touch
-touch emails.go
-touch graph.go
-scout -ftsea La
-scout -ftsea Dow
-search langua
-scout -ftsea lang
-scout -ftsea .loca
-scout -ftsea nvi
-rename languageclient
-scout -ftsea r
-scout -ftsea shar
-scout -ftsea 
-chmod 111
-chmod 222
-chmod 333
-chmod 444
-chmod 555
-chmod 666
-scout -ftsea avr
-open_with vim
-search iom
-scout -ftsea .git
-search git
-w
+mkdir YtNazi
+scout -ftsea YtN
+scout -ft bash
+sco
+scout -ftsea sea
+scout -ftsea N
+filter D
+filter
+scout -ftsea .con
+scout -ftsea ran
+rename Arduino
+scout -ftsea Mu
+mkdir copper
+rename 1.jpg
+rename 2.webm
+rename testread.sh
+touch testwrite.sh
 chmod 755
-search Unity
-search 328
-search arduino
-search avr
-search ard
-open_with 
-mkdir steppers
-drivers
-mkdir drivers
-touch object.go
-rename main.go
-wq
-rename
-rename m_test.go
-scout -ftsea go
-scout -ftsea pr
-scout -ftsea gra
-mkdir graph
-touch main.go
-shell q %s
-q
+rename _ui
+scout -ftsea z
+scout -ftsea Doc
+search unifon
+search Braille
+unmark
+rename test.gif
+search Build
+search aa-lib
+scout -ftsea liba
+search libaa
+scout -ftsea lib
+scout -ftsea libaa
+scout -ftsea 
+open_with pqiv
+scout -ftsea ir
 scout -ftsea no
+rename
+rename d
+rename describer
+open_with nvim
+w
+delete
+rename house.pal
+search .pal
+touch todo.pal
+open_with vim
+scout -ftsea Sam
 
+search Bannon
+q
+wq

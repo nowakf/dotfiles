@@ -37,7 +37,6 @@ rename
 rename d
 rename describer
 open_with nvim
-w
 delete
 rename house.pal
 search .pal
@@ -48,3 +47,4 @@ scout -ftsea Sam
 search Bannon
 q
 wq
+w

@@ -1,11 +1,13 @@
 set nocompatible
+set guioptions=
+set guifont=Bitstream\ Vera\ Sans\ Mono\ 14
+
+nnoremap <leader>K :echo(eval('"\'.expand('<cword>').'"'))<cr>
 set hlsearch
-set title titlestring=
 filetype plugin on
 syntax on
 set autowrite
 
-iab <expr> dts strftime("%Y%m%d")
 
 "set shortmess=aqcst
 "
@@ -13,7 +15,8 @@ cnoremap W! w !sudo tee > /dev/null %
 
 "operator pending mapping to do stuff in quotes
 
-nnoremap <silent><esc><c-l> :noh<cr>
+nnoremap <silent><nowait><leader>/ :noh<cr>
+
 
 "some mappings to deal with the diff between english and US keyboards 
 noremap ' "
@@ -33,6 +36,7 @@ Plug 'HiPhish/info.vim'
 Plug 'tommcdo/vim-exchange'
 Plug 'kopischke/vim-fetch'
 Plug 'tpope/vim-unimpaired'
+"Plug 'tpope/vim-sensible'
 Plug 'easymotion/vim-easymotion'
 Plug 'vimwiki/vimwiki'
 Plug 'mhinz/vim-startify'
@@ -44,7 +48,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf'
 Plug 'mbbill/undotree'
 Plug 'xtal8/traces.vim'
-Plug 'justinmk/vim-sneak'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-surround'
 "these have problems in neovim
@@ -55,15 +58,12 @@ endif
 
 call plug#end()
 "Some experimental stuff for pdfs
-set mouse=a
-
-function! Altmap(char)
-	if has('gui_running') | return ' <A-'.a:char.'> ' | else | return ' <Esc>'.a:char.' '|endif
-endfunction
-
-autocmd filetype haskell call g:ExpTabs()
 
 
+autocmd FileType haskell call g:ExpTabs()
+
+command! ExpTabs :call ExpTabs()
+"so I can call this manually
 function! g:ExpTabs()
 	set tabstop=8
 	set expandtab
@@ -72,6 +72,8 @@ function! g:ExpTabs()
 	set shiftround
 endfunction
 
+
+set mouse=a
 "C# stuff
 let g:ycm_filetype_whitelist = { 'cs' : 1 }
 autocmd FileType cs call LoadYCM() 
@@ -87,12 +89,10 @@ endfunction
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 nnoremap <silent><Leader><CR> :Buffers<cr>
-nnoremap <silent><esc><esc> :ccl <cr>
+"noremap <esc><esc> :ccl<cr>
 nnoremap <leader><T> :Tags<cr>
 
-"sneak stuff
-autocmd ColorScheme * hi! link Sneak Conditional
-let g:sneak#s_next = 1
+
 function! s:buflist()
 	redir => ls
 	silent ls
@@ -100,20 +100,21 @@ function! s:buflist()
 	return split(ls, '\n')
 endfunction
 
-function! s:bufopen(e)
-	execute 'buffer' matchstr(a:e, '^[ 0-9]*')
-endfunction
+"function! s:bufopen(e)
+"	execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+"endfunction
 
 set backspace=indent,eol,start
 
 autocmd FileType twee :nnoremap � /<C-R>="::".expand('<cword>')<C+)<CR>"
 
-autocmd FileType markdown :nnoremap <leader>m :i<!--more--><cr>P
+autocmd FileType markdown iab <buffer> mrr <!--more-->
+autocmd Filetype markdown iab <buffer><expr> dts strftime("%Y%m%d")
 
 "plaintext editing stuff:
 autocmd FileType text :nnoremap <leader>cd :cd /home/francis/Documents/z-n.0.01/<cr>
-autocmd FileType *.txt :nmap f <Plug>(easymotion-f)
-autocmd FileType *.txt :nmap F <Plug>(easymotion-F)
+autocmd FileType text :nmap f <Plug>(easymotion-f)
+autocmd FileType text :nmap F <Plug>(easymotion-F)
 
 :command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
 :command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> - |fmt -csw78
@@ -200,13 +201,17 @@ endfunction
 
 let g:goyo_callbacks = [function('g:Goyo_Before'), function('g:Goyo_After')]
 
-exec 'nnoremap'.Altmap('j').':m .+1<CR>=='
-exec 'nnoremap'.Altmap('k').':m .-2<CR>=='
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
 map <leader>ta :Tabularize /
 
-let &t_AB="\e[48;5;%dm" 
-let &t_AF="\e[38;5;%dm" 
+"let &t_AB="\e[48;5;%dm" 
+"let &t_AF="\e[38;5;%dm" 
 
 set wrap
 set linebreak
@@ -221,12 +226,12 @@ colors zenburn
 "if has('nvim')
 "	nnoremap <BS> <C-W>h
 "endif
-
 nnoremap <c-h> <C-W>h
 nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-L> <C-W>l
 
+set laststatus=0
 set splitbelow
 set splitright
 
@@ -250,4 +255,3 @@ set undofile " Persistent Undo
 set directory=~/.vim/swap//
 set backupdir=~/.vim/backup//
 set undodir=~/.vim/undo//
-

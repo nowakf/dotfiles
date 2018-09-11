@@ -57,3 +57,5 @@ BROWSER=/usr/bin/firefox
 EDITOR=/usr/bin/vim
 # <<< END ADDED BY CNCHI INSTALLER
 
+stty -ixon
+

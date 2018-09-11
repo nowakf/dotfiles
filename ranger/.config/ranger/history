@@ -1,31 +1,3 @@
-mkdir YtNazi
-scout -ftsea YtN
-scout -ft bash
-sco
-scout -ftsea sea
-scout -ftsea N
-filter D
-filter
-scout -ftsea .con
-scout -ftsea ran
-rename Arduino
-scout -ftsea Mu
-mkdir copper
-rename 1.jpg
-rename 2.webm
-rename testread.sh
-touch testwrite.sh
-chmod 755
-rename _ui
-scout -ftsea z
-scout -ftsea Doc
-search unifon
-search Braille
-unmark
-rename test.gif
-search Build
-search aa-lib
-scout -ftsea liba
 search libaa
 scout -ftsea lib
 scout -ftsea libaa
@@ -33,18 +5,46 @@ scout -ftsea
 open_with pqiv
 scout -ftsea ir
 scout -ftsea no
-rename
 rename d
 rename describer
-open_with nvim
-delete
 rename house.pal
 search .pal
 touch todo.pal
 open_with vim
 scout -ftsea Sam
-
 search Bannon
-q
-wq
+open_with nvim
+rename arm.go
+rename c
+rename tendril.go
+rename cloudc
+rename cloud.go
+shell cat %s >> tendril.go
+search local
+search nv
+search go
+rename
+rename _govet.vim
+rename govet_new.vim
+rename govet.vim
+mkdir
+mkdir plugin
+mkdir doc
 w
+search mp2
+delete
+search mp3
+q
+search tty
+search cons
+search 
+search she
+search conf
+search fish
+touch ssh
+wqa
+search ARR
+search some
+
+rename gist.sh
+wq

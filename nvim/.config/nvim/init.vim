@@ -1,4 +1,5 @@
 source ~/.vimrc
+
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 
@@ -10,17 +11,19 @@ Plug 'elzr/vim-json'
 Plug 'simonjbeaumont/vim-ocamlspot'
 Plug 'vim-scripts/CRefVim'
 Plug 'fatih/vim-go'
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'roxma/nvim-completion-manager'
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-clang'
+Plug 'zchee/deoplete-jedi'
+
 Plug 'w0rp/ale'
-Plug 'roxma/ncm-clang'
 Plug 'tpope/vim-fugitive'
-Plug 'OmniSharp/omnisharp-vim'
 Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
-
+let g:deoplete#enable_at_startup = 1
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 tnoremap <C-h> <C-\><C-N><C-w>h
 tnoremap <C-j> <C-\><C-N><C-w>j
@@ -117,7 +120,7 @@ let g:ale_yaml_yamllint_options = 'relaxed'
 let g:go_fmt_fail_silently = 1
 
 "TERMINAL
-    :tnoremap <Leader><Esc> <C-\><C-n>
+:tnoremap <Leader><Esc> <C-\><C-n>
 
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==

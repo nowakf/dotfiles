@@ -1,18 +1,56 @@
 #
 # ~/.bashrc
 #
-export EDITOR=vim
 
-PATH=$PATH:/home/francis/bin
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) exit;;
+esac
 
+PROMPT_COMMAND='history -a;history -n'
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+shopt -s globstar
+
+export EDITOR='vim'
+
+export PS1="\W "
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+PATH=$PATH:/home/francis/bin:/home/francis/.local/bin
+export GOPATH=$HOME/src/go
+
+source /etc/profile.d/autojump.bash
 source /usr/share/fzf/key-bindings.bash
+#source /usr/share/fzf/completion.bash
 
+alarm(){
+	at -f <(echo alert "${@:2}") $1
+}
+
+alias note="vim /home/francis/Documents/miscnotes.txt"
+alias nvim="TERM=tmux-256color nvim"
 #fun FZF stuff
-
 tb() {
 	trans -b $@ | xclip -f -selection "clipboard"
 }
 
+ffg() {
+  local pid
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+ sudo reptyr -s $pid
+  #doesn't work
+}
 fkill() {
   local pid
   pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
@@ -48,14 +86,24 @@ sf() {
   [[ -n "$files" ]] && ${EDITOR:-vim} $files
 }
 # If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
 alias ls='ls --color=auto'
-PS1='[\u@\h \W]\$ '
 # >>> BEGIN ADDED BY CNCHI INSTALLER
 BROWSER=/usr/bin/firefox
 EDITOR=/usr/bin/vim
 # <<< END ADDED BY CNCHI INSTALLER
 
 stty -ixon
+
+
+# HSTR configuration - add this to ~/.bashrc
+alias hh=hstr                    # hh to be alias for hstr
+export HSTR_CONFIG=hicolor       # get more colors
+shopt -s histappend              # append new history items to .bash_history
+export HISTCONTROL=ignorespace   # leading space hides commands from history
+export HISTFILESIZE=10000        # increase history file size (default is 500)
+export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
+# ensure synchronization between Bash memory and history file
+bind '"\C-r": "\e0ihstr -- \C-j"'
+# if this is interactive shell, then bind 'kill last command' to Ctrl-x k
+if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\e0ihstr -k \C-j"'; fi
 

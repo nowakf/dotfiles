@@ -1,50 +1,50 @@
-search libaa
-scout -ftsea lib
-scout -ftsea libaa
-scout -ftsea 
-open_with pqiv
-scout -ftsea ir
-scout -ftsea no
-rename d
-rename describer
-rename house.pal
-search .pal
-touch todo.pal
-open_with vim
-scout -ftsea Sam
-search Bannon
-open_with nvim
-rename arm.go
-rename c
-rename tendril.go
-rename cloudc
-rename cloud.go
-shell cat %s >> tendril.go
-search local
-search nv
-search go
-rename
-rename _govet.vim
-rename govet_new.vim
-rename govet.vim
-mkdir
-mkdir plugin
-mkdir doc
-w
-search mp2
-delete
-search mp3
+filter mobi
+rename fzf_launcher
+scout -ftsea mp3
+search GM
+scout -ftsea M
+rename 2_- RE Era - A New Dawn - John Jackson Miller (retail) (epub).epub
+search pal
 q
-search tty
-search cons
+search Music
+rename 
+rename _ScreenSelector.so
+open_with ./
+search Mus
+search sphere
+mkdir sphere
+search Doc
+search z-n
+search dead
+search Cha
+rename ScreenSelector.so
+rename _go
 search 
-search she
-search conf
-search fish
-touch ssh
-wqa
-search ARR
-search some
-
-rename gist.sh
+scout -ftsea Doc
+scout -ftsea z
+mkdir unsorted
+search unsor
+search syste
+search .met
+search meta
+open_with vim
+mkdir portfol
+search portfol
+delete
+filter \ 
 wq
+rename byzantium.txt
+mark
+scout -ftsea .jpg
+h
+f
+
+scout -ftsea 
+filter .JPG
+filter Pi
+filter 
+search Pic
+rename comet.png_
+rename comet.png
+mkdir misc
+open_with 

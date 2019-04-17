@@ -110,6 +110,7 @@ case "$mimetype" in
         exit 2;;
     # Ascii-previews of images:
     image/*)
+    	#lsix $path && exit 4 || exit 1;;
         img2txt --gamma=0.6 --width="$width" "$path" && exit 4 || exit 1;;
     # Display information about media files:
     video/* | audio/*)

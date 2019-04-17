@@ -5,22 +5,82 @@ let &packpath = &runtimepath
 set laststatus=0
 
 call plug#begin('~/.local/share/nvim/plugged')
-
+"scheme
+Plug 'Olical/vim-scheme', { 'for': 'scheme', 'on': 'SchemeConnect' }
+Plug 'guns/vim-sexp'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'elzr/vim-json'
 Plug 'simonjbeaumont/vim-ocamlspot'
 Plug 'vim-scripts/CRefVim'
 Plug 'fatih/vim-go'
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'roxma/nvim-completion-manager'
-Plug 'w0rp/ale'
-Plug 'roxma/ncm-clang'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'HiPhish/repl.nvim'
+"let g:racer_cmd = "/home/francis/.cargo/bin/racer"{{{
+"let g:racer_insert_paren = 1
+"au FileType rust nmap gd <Plug>(rust-def)
+"au FileType rust nmap gs <Plug>(rust-def-split)
+"au FileType rust nmap gx <Plug>(rust-def-vertical)
+"au FileType rust nmap K <Plug>(rust-doc)
+"Plug 'racer-rust/vim-racer'}}}
 Plug 'tpope/vim-fugitive'
-Plug 'OmniSharp/omnisharp-vim'
-Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
+set hidden
+set foldmethod=marker
 
+augroup filetype_rust"{{{
+	inoremap <silent><expr> <c-n> coc#refresh()
+	"set completefunc=coc#refresh()
+	set signcolumn=yes
+	set completeopt=menu
+	" Use `[c` and `]c` for navigate diagnostics
+	nmap <silent> [c <Plug>(coc-diagnostic-prev)
+	nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+	" Remap keys for gotos
+	nmap <silent> gd <Plug>(coc-definition)
+	nmap <silent> gy <Plug>(coc-type-definition)
+	nmap <silent> gi <Plug>(coc-implementation)
+	nmap <silent> gr <Plug>(coc-references)
+
+	" Use K for show documentation in preview window
+	nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+	function! s:show_documentation()
+	  if &filetype == 'vim'
+	    execute 'h '.expand('<cword>')
+	  else
+	    call CocAction('doHover')
+	  endif
+	endfunction
+	vmap <leader>f  <Plug>(coc-format-selected)
+	nmap <leader>f  <Plug>(coc-format-selected)
+augroup END"}}}
+
+"if executable('rls'){{{
+"	au User lsp_setup call lsp#register_server({
+"		\'name':'rls',
+"		\'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
+"		\'whitelist':['rust'],
+"		\})
+"endif}}}
+
+
+
+" Starts the REPL.
+autocmd FileType scheme nnoremap <buffer> <localleader>rc :SchemeConnect<cr>
+
+" Evaluates the outer most / top level form and jumps the cursor back to where it was.
+autocmd FileType scheme nnoremap <buffer><silent> <localleader>re :normal mscpaF<cr>`s
+
+autocmd FileType scheme call repl#define_repl('scheme', {'bin':'guile'}, 'force')
+" Evaluates the entire file.
+autocmd FileType scheme nnoremap <buffer><silent> <localleader>rf :normal msggcpG<cr>`s
+
+autocmd FileType scheme nmap <leader>rs <Plug>(ReplSend)
+
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 tnoremap <C-h> <C-\><C-N><C-w>h
 tnoremap <C-j> <C-\><C-N><C-w>j
@@ -30,37 +90,26 @@ tnoremap <Esc><Esc> <C-\><C-n>
 autocmd BufWinEnter,WinEnter term://* startinsert
 
 
-autocmd FileType json nnoremap <silent>]] :call JSONMove('e')<cr>
+autocmd FileType json nnoremap <silent>]] :call JSONMove('e')<cr>"{{{
 autocmd FileType json nnoremap <silent>[[ :call JSONMove('be')<cr>
 autocmd FileType json onoremap iq i"
 
 function! JSONMove(flags)
 	let pattern = '\m:\s*"\=[0-9a-zA-Z]\='
 	call search(pattern, a:flags)
-endfunction
-
-"autocmd FileType json nnoremap ]] :execute 'silent normal! ' . '/' . ':\s*"' . '/' . 'e' . "\r" 
+endfunction"}}}
 
 "C++:
 "
 autocmd filetype cpp call g:ExpTabs()
- 
-let g:ale_cpp_clangtidy_checks=[
-\ 'modernize-*',
-\ 'performance-*',
-\ 'clang-analyser-*',
-\ 'bugprone-*',
-\]   
-
-" 'clang-analyser-*','clang-analyser-cplusplus-*','bugprone-*','performance-*','llvm-*', 'modernize-*', 'google-*', 'fuschia-*'
 
 autocmd FileType cpp set keywordprg=:Cppman
 command! -nargs=* Cppman pclose | ped +:terminal\ cppman\ <args>
 
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
+"execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
-augroup filetype_ml
+augroup filetype_ml"{{{
 	autocmd!
 	autocmd FileType ocaml call g:ExpTabs()
 	autocmd FileType ocaml execute "set rtp+=" . substitute(system('opam config var share'), '\n$', '', '''') . "/ocp-indent/vim/indent/ocaml.vim"
@@ -72,30 +121,10 @@ augroup filetype_ml
 	autocmd FileType ocaml :ALEToggle
 	autocmd FileType ocaml :ALEToggle
 	"autocmd FileType ocaml :let g:ale_lint_delay=99999999999
+	
 augroup END
-
-"Mapping to togal ale
-nnoremap <Leader>a :ALEToggle<cr>
-
-" Compile C# programs with the Unity engine DLL file
-let g:ale_cs_mcsc_assembly_path = [
-\ '/opt/Unity/Editor/Data/Managed/',
-\]
-let g:ale_cs_mcsc_assemblies = [
-\ '/opt/Unity/Editor/Data/Managed/',
-\]
-"OmniSharp
-
-let g:OmniSharp_server_type = 'roslyn'
-let g:OmniSharp_server_path = '/home/francis/.omnisharp/omnisharp/OmniSharp.exe'
-let g:OmniSharp_selector_ui = 'fzf'
-function! g:CS_stuff()
-	"setlocal noshowmatch
-endfunction
-
-autocmd FileType cs :call g:CS_stuff()
-
-augroup filetype_go
+"}}}
+augroup filetype_go"{{{
 	autocmd!
 	autocmd FileType go nnoremap <Leader>i <Plug>(go-info)
 	autocmd FileType go nnoremap <Leader>B :GoBuild<cr>
@@ -105,19 +134,9 @@ augroup filetype_go
 	autocmd FileType go nnoremap <silent>FF :execute "normal! mq?func (\r:nohlsearch\ryt)`qpa) "<cr>:startinsert!<cr>
 augroup END
 let g:ale_sign_column_always = 1
+"}}}
 
-
-"COMPLETION-MANAGER
-let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
-
-"Yaml-lint
-let g:ale_yaml_yamllint_options = 'relaxed'
-
-"VIM-GO SETTINGS:
-let g:go_fmt_fail_silently = 1
-
-"TERMINAL
-    :tnoremap <Leader><Esc> <C-\><C-n>
+:tnoremap <Leader><Esc> <C-\><C-n>"{{{
 
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
@@ -125,10 +144,40 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
-
-"{{{ PATH
-
+"}}}
 set path+=/usr/avr/include
 set path+=/usr/avr/include/avr
 
-"}}}
+"imap <silent> <CR> <C-r>=ExpandLspSnippet()<CR>{{{
+"function! ExpandLspSnippet()
+"    call UltiSnips#ExpandSnippetOrJump()
+"    if !pumvisible() || empty(v:completed_item)
+"        return ''
+"    endif
+"
+"    " only expand Lsp if UltiSnips#ExpandSnippetOrJump not effect.
+"    let l:value = v:completed_item['word']
+"    let l:matched = len(l:value)
+"    if l:matched <= 0
+"        return ''
+"    endif
+"
+"    " remove inserted chars before expand snippet
+"    if col('.') == col('$')
+"        let l:matched -= 1
+"        exec 'normal! ' . l:matched . 'Xx'
+"    else
+"        exec 'normal! ' . l:matched . 'X'
+"    endif
+"
+"    if col('.') == col('$') - 1
+"        " move to $ if at the end of line.
+"        call cursor(line('.'), col('$'))
+"    endif
+"
+"    " expand snippet now.
+"    call UltiSnips#Anon(l:value)
+"    return ''
+"endfunction
+"
+"imap <C-k> <C-R>=ExpandLspSnippet()<CR>}}}

@@ -1,50 +1,50 @@
-mkdir YtNazi
-scout -ftsea YtN
-scout -ft bash
-sco
-scout -ftsea sea
-scout -ftsea N
-filter D
-filter
-scout -ftsea .con
-scout -ftsea ran
-rename Arduino
-scout -ftsea Mu
-mkdir copper
-rename 1.jpg
-rename 2.webm
-rename testread.sh
-touch testwrite.sh
-chmod 755
-rename _ui
-scout -ftsea z
-scout -ftsea Doc
-search unifon
-search Braille
-unmark
-rename test.gif
-search Build
-search aa-lib
-scout -ftsea liba
-search libaa
-scout -ftsea lib
-scout -ftsea libaa
-scout -ftsea 
-open_with pqiv
-scout -ftsea ir
-scout -ftsea no
-rename
-rename d
-rename describer
-open_with nvim
-w
-delete
-rename house.pal
-search .pal
-touch todo.pal
-open_with vim
-scout -ftsea Sam
-
-search Bannon
+filter mobi
+rename fzf_launcher
+scout -ftsea mp3
+search GM
+scout -ftsea M
+rename 2_- RE Era - A New Dawn - John Jackson Miller (retail) (epub).epub
+search pal
 q
+search Music
+rename 
+rename _ScreenSelector.so
+open_with ./
+search Mus
+search sphere
+mkdir sphere
+search Doc
+search z-n
+search dead
+search Cha
+rename ScreenSelector.so
+rename _go
+search 
+scout -ftsea Doc
+scout -ftsea z
+mkdir unsorted
+search unsor
+search syste
+search .met
+search meta
+open_with vim
+mkdir portfol
+search portfol
+delete
+filter \ 
 wq
+rename byzantium.txt
+mark
+scout -ftsea .jpg
+h
+f
+
+scout -ftsea 
+filter .JPG
+filter Pi
+filter 
+search Pic
+rename comet.png_
+rename comet.png
+mkdir misc
+open_with 
